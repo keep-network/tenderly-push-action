@@ -1,0 +1,39 @@
+name: "Tenderly Push"
+description: "Publish contracts to Tenderly"
+inputs:
+  tenderly-token:
+    description: "Access token to Tenderly"
+    required: true
+  tenderly-project:
+    description: "Tenderly project slug"
+    required: false
+    default: "thesis/keep-test"
+  eth-network-id:
+    description: "Ethereum Network ID"
+    required: true
+  github-project-name:
+    description: "GitHub project name"
+    required: true
+  version-tag:
+    description: "Version tag"
+    required: false
+runs:
+  using: "composite"
+  steps:
+    - id: tenderly-install
+      shell: bash
+      run: curl https://raw.githubusercontent.com/Tenderly/tenderly-cli/master/scripts/install-linux.sh | sh
+    - id: tenderly-login
+      shell: bash
+      run: tenderly login --authentication-method access-key --access-key ${{ inputs.tenderly-token }}
+    - id: tenderly-push
+      shell: bash
+      run: |
+        tenderly push \
+          --networks ${{ inputs.eth-network-id }} \
+          --project-slug ${{ inputs.tenderly-project }} \
+          --tag ${{ inputs.github-project-name }} \
+          --tag ${{ inputs.version-tag }}
+branding:
+  icon: 'upload'  
+  color: 'blue'
