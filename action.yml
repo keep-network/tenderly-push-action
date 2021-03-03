@@ -1,6 +1,10 @@
 name: "Tenderly Push"
 description: "Publish contracts to Tenderly"
 inputs:
+  working-directory:
+    description: "Working directory"
+    required: false
+    default: "."
   tenderly-token:
     description: "Access token to Tenderly"
     required: true
@@ -21,12 +25,15 @@ runs:
   using: "composite"
   steps:
     - id: tenderly-install
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: curl https://raw.githubusercontent.com/Tenderly/tenderly-cli/master/scripts/install-linux.sh | sh
     - id: tenderly-login
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: tenderly login --authentication-method access-key --access-key ${{ inputs.tenderly-token }}
     - id: tenderly-push
+      working-directory: ${{ inputs.working-directory }}
       shell: bash
       run: |
         tenderly push \

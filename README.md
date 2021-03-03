@@ -6,9 +6,9 @@ GitHub Action to publish contracts to Tenderly.
 
 ```yaml
 - uses: keep-network/tenderly-push-action@v1
-  working-directory: solidity
   continue-on-error: true # optional, don't fail the job on step failure
   with:
+    working-directory: solidity
     tenderly-token: 0123456789AbCdEf
     tenderly-project: thesis/keep-dev
     eth-network-id: "1937"
