@@ -27,7 +27,7 @@ runs:
     - id: tenderly-install
       working-directory: ${{ inputs.working-directory }}
       shell: bash
-      run: curl https://raw.githubusercontent.com/Tenderly/tenderly-cli/master/scripts/install-linux.sh | sh
+      run: curl https://raw.githubusercontent.com/Tenderly/tenderly-cli/master/scripts/install-linux.sh | sudo sh
     - id: tenderly-login
       working-directory: ${{ inputs.working-directory }}
       shell: bash
