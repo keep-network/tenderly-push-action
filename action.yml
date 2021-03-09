@@ -35,12 +35,13 @@ runs:
     - id: tenderly-push
       working-directory: ${{ inputs.working-directory }}
       shell: bash
-      run: |
-        tenderly push \
-          --networks ${{ inputs.eth-network-id }} \
-          --project-slug ${{ inputs.tenderly-project }} \
-          --tag ${{ inputs.github-project-name }} \
-          --tag ${{ inputs.version-tag }}
+      env:
+        ETH_NETWORK_ID: ${{ inputs.eth-network-id }}
+        TENDERLY_PROJECT_SLUG: ${{ inputs.tenderly-project }}
+        GITHUB_PROJECT_NAME_TAG: ${{ inputs.github-project-name }}
+        VERSION_TAG: ${{ inputs.version-tag }}
+      run: ${{ github.action_path }}/push.sh
+
 branding:
   icon: 'upload'  
   color: 'blue'
